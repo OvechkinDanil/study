@@ -6,7 +6,7 @@
 #include <sstream>
 #include <sstream>
 using namespace std;
-std::vector<string>StringParcing(std::string str)
+std::vector<string> StringParcing(std::string str)
 {
   std::istringstream iss(str);
   std::vector<std::string> tokens;
@@ -15,7 +15,7 @@ std::vector<string>StringParcing(std::string str)
     std::back_inserter<std::vector<std::string> >(tokens));
   return tokens;
 }
-std::vector<string>TextParcing(string filename)
+std::vector<string> TextParcing(string filename)
 {
   std::string str;
   std::vector<string> s, words;
@@ -24,7 +24,10 @@ std::vector<string>TextParcing(string filename)
   {
     std::getline(input, str);
     s = StringParcing(str);
-    words.insert(words.end(), s.begin(), s.end());
+    for (i = 0; i < s.size(); i++)
+		{
+			words.push_back(s[i]);
+		}
   }
   return words;
 }
@@ -38,33 +41,33 @@ void PrintSpaces(int num)
 }
 int WordDivision(std::vector<string> words, int &i, int size, int rest)
 {
-  int curSize = 0, k = 0, j = 0, WordSize = 0;
+  int curSize = 0, WordInd = 0, j = 0, WordSize = 0;
   const char* CharWord;
 
   WordSize = (int)words[i].size();
   CharWord = words[i].c_str();
   while (rest != 0)
   {
-    cout << CharWord[k];
-    k += 1;
+    cout << CharWord[WordInd];
+    WordInd += 1;
     WordSize -= 1;
     rest -= 1;
   }
-  if (k != 0)
+  if (WordInd != 0)
     cout << endl;
   while (WordSize >= size)
   {
-    for (j = k;j < k + size; j++)
+    for (j = k;j < WordInd + size; j++)
       cout << CharWord[j];
     cout << endl;
-    k += size;
+    WordInd += size;
     WordSize -= size;
   }
   curSize = WordSize;
   while (WordSize > 0)
   {
-    cout << CharWord[k];
-    k += 1;
+    cout << CharWord[WordInd];
+    WordInd += 1;
     WordSize -= 1;
   }
   if (curSize != 0)
