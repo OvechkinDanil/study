@@ -24,10 +24,7 @@ std::vector<string> TextParcing(string filename)
   {
     std::getline(input, str);
     s = StringParcing(str);
-    for (i = 0; i < s.size(); i++)
-    {
-      words.push_back(s[i]);
-    }
+    words.insert(words.end(), s.begin(), s.end());
   }
   return words;
 }
