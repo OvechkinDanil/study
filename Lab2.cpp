@@ -5,58 +5,113 @@
 
 class Point 
 {
-	public:
+	private:
 		double x;
 		double y;
 		double radius;
-
-		Point go_right(Point &first_pnt, double delta);
-		Point go_left(Point &first_pnt, double delta);
-		Point go_up(Point &first_pnt, double delta);
-		Point go_down(Point& first_pnt, double delta);
+	public:
+		Point(void);
+		Point(double xvalue, double yvalue, double radiusval)
+		{
+			x = xvalue;
+			y = yvalue;
+			radius = radiusval;
+		}
+		Point go_right(double delta);
+		Point go_left(double delta);
+		Point go_up(double delta);
+		Point go_down(double delta);
+		void DrawPoint(int iter);
+		Point operator+(const Point& right)
+		{
+			Point temp;
+			temp.x = this->x + right.x;
+			temp.y = this->y + right.y;
+			temp.radius = this->radius;
+			return temp;
+		}
+		Point operator-(const Point& right)
+		{
+			Point temp;
+			temp.x = this->x - right.x;
+			temp.y = this->y - right.y;
+			temp.radius = this->radius;
+			return temp;
+		}
 };
+
 
 class Trace
 {
-	public:
+	private:
 		std::list<Point> points;
 		double speed;
+	public:
+		Trace(void);
+		std::list<Point>&GetListOfPoints();
+		double GetSpeed();
 };
 
 Trace trace;
 
-Point Point::go_right(Point& first_pnt, double delta)
+Point::Point(void)
+{
+	x = 0.0;
+	y = 0.0;
+	radius = 0.1;
+}
+Point Point::go_right(double delta)
 {
 	Point current_pnt;
-	current_pnt.x = first_pnt.x + delta;
-	current_pnt.y = first_pnt.y;
-	current_pnt.radius = first_pnt.radius;
+	Point deltaPoint(delta, 0, 0);
+	current_pnt = *this + deltaPoint;
 	return current_pnt;
 }
-Point Point::go_left(Point& first_pnt, double delta)
+Point Point::go_left(double delta)
 {
 	Point current_pnt;
-	current_pnt.x = first_pnt.x - delta;
-	current_pnt.y = first_pnt.y;
-	current_pnt.radius = first_pnt.radius;
+	Point deltaPoint(delta, 0, 0);
+	current_pnt = *this - deltaPoint;
 	return current_pnt;
 }
-Point Point::go_up(Point& first_pnt, double delta)
+Point Point::go_up(double delta)
 {
 	Point current_pnt;
-	current_pnt.y = first_pnt.y + delta;
-	current_pnt.x = first_pnt.x;
-	current_pnt.radius = first_pnt.radius;
+	Point deltaPoint(0, delta, 0);
+	current_pnt = *this + deltaPoint;
 	return current_pnt;
 }
-Point Point::go_down(Point& first_pnt, double delta)
+Point Point::go_down(double delta)
 {
 	Point current_pnt;
-	current_pnt.y = first_pnt.y - delta;
-	current_pnt.x = first_pnt.x;
-	current_pnt.radius = first_pnt.radius;
+	Point deltaPoint(0, delta, 0);
+	current_pnt = *this - deltaPoint;
 	return current_pnt;
 }
+void Point::DrawPoint(int iter)
+{
+	glBegin(GL_POLYGON);
+	for (float i = 0; i < 2 * 3.14; i += 3.14 / 15)
+	{
+		glVertex2f(x + radius * (1 + 0.08 * iter) * sin(i), y + radius * (1 + 0.08 * iter) * cos(i));
+	}
+	glEnd();
+}
+std::list<Point>& Trace::GetListOfPoints()
+{
+	return points;
+}
+double Trace::GetSpeed()
+{
+	return speed;
+}
+Trace::Trace(void)
+{
+	Point pnt;
+	points.push_front(pnt);
+	speed = 0.1;
+}
+
 void reshape(int w, int h) 
 {
 	if (h == 0)
@@ -69,15 +124,6 @@ void reshape(int w, int h)
 	gluPerspective(45, ratio, 1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 }
-void DrawPoint(Point pnt, int iter)
-{
-	glBegin(GL_POLYGON);
-	for (float i = 0; i < 2 * 3.14; i += 3.14 / 15)
-	{
-		glVertex2f(pnt.x + pnt.radius * (1 + 0.08 * iter) * sin(i), pnt.y + pnt.radius * (1 + 0.08 * iter) * cos(i));
-	}
-	glEnd();
-}
 void render(void) {
 	int i = 1;
 	Point current_pnt;
@@ -89,34 +135,33 @@ void render(void) {
 		0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f);
 
-	if (trace.points.size() == 0)
+	if (trace.GetListOfPoints().size() == 0)
 	{
-		Point pnt = { 0.0, 0.0, 0.1 };
-		trace.points.push_front(pnt);
-		trace.speed = 0.1;
+		Point pnt;
+		trace.GetListOfPoints().push_front(pnt);
 		glColor3f(0, 0.5, 0.5);
-		DrawPoint(pnt, i);
+		pnt.DrawPoint(i);
 		glutSwapBuffers();
 		return;
 	}
-	if (trace.points.size() > 10)
+	if (trace.GetListOfPoints().size() > 10)
 	{
-		trace.points.pop_back();
+		trace.GetListOfPoints().pop_back();
 	}
 
 	glColor3f(0, 0.5, 0.5);
-	current_pnt = trace.points.front();
-	DrawPoint(current_pnt, i);
-	trace.points.pop_front();
-	trace.points.push_back(current_pnt);
+	current_pnt = trace.GetListOfPoints().front();
+	current_pnt.DrawPoint(i);
+	trace.GetListOfPoints().pop_front();
+	trace.GetListOfPoints().push_back(current_pnt);
 
-	while (i < trace.points.size())
+	while (i < trace.GetListOfPoints().size())
 	{
-		current_pnt = trace.points.front();
+		current_pnt = trace.GetListOfPoints().front();
 		glColor4f(0.5, 0.5, 0.5, 1.0 - i * 0.1);
-		DrawPoint(current_pnt, i);
-		trace.points.pop_front();
-		trace.points.push_back(current_pnt);
+		current_pnt.DrawPoint(i);
+		trace.GetListOfPoints().pop_front();
+		trace.GetListOfPoints().push_back(current_pnt);
 		i++;
 	}
 	glutSwapBuffers();
@@ -125,30 +170,30 @@ void processSpecialKeys(int key, int x, int y)
 {
 	Point current_pnt, first_pnt;
 
-	first_pnt = trace.points.front();
+	first_pnt = trace.GetListOfPoints().front();
 	switch (key) {
 	case GLUT_KEY_RIGHT:
 	{
-		current_pnt = first_pnt.go_right(first_pnt, trace.speed);
+		current_pnt = first_pnt.go_right(trace.GetSpeed());
 		break;
 	}
 	case GLUT_KEY_LEFT:
 	{
-		current_pnt = first_pnt.go_left(first_pnt, trace.speed);
+		current_pnt = first_pnt.go_left(trace.GetSpeed());
 		break;
 	}
 	case GLUT_KEY_UP:
 	{
-		current_pnt = first_pnt.go_up(first_pnt, trace.speed);
+		current_pnt = first_pnt.go_up(trace.GetSpeed());
 		break;
 	}
 	case GLUT_KEY_DOWN:
 	{
-		current_pnt = first_pnt.go_down(first_pnt, trace.speed);
+		current_pnt = first_pnt.go_down(trace.GetSpeed());
 		break;
 	}
 	}
-	trace.points.push_front(current_pnt);
+	trace.GetListOfPoints().push_front(current_pnt);
 }
 void Timer(int value)
 {
