@@ -7,7 +7,7 @@ void MenuItem::PrintItem(void* font)
 	x = pos.GetX();
 	y = pos.GetY();
 	glRasterPos2f(x, y);
-	for (c = item.c_str(); *c != '\0'; c++)
+	for (auto c : item)
 	{
 		glutBitmapCharacter(font, *c);
 	}
