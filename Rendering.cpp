@@ -1,4 +1,12 @@
 #include "Rendering.h"
+int x_toPixel(double cur_x)
+{
+	return (int)(5.5 + cur_x) * WinW / 11;
+}
+int y_toPixel(double cur_y)
+{
+	return (int)(4.1 - cur_y) * WinH / 8.2;
+}
 
 
 list<MenuItem> FindSubMenu(MenuItem* parent, string& str)
@@ -59,8 +67,8 @@ void MousePressed(int buttom, int state, int x, int y)
 	{
 		for (MenuItem it : curItems)
 		{
-			item_pixel_x = it.ConvertPosX();
-			item_pixel_y = it.ConvertPosY();
+			item_pixel_x = x_toPixel(it.GetPos().GetX());
+			item_pixel_y = y_toPixel(it.GetPos().GetY());
 			if (abs(item_pixel_x - x) < deltaX && abs(item_pixel_y - y) < deltaY)
 			{
 				curItems = it.GetSubMenu();
