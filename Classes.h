@@ -18,9 +18,8 @@ class Position
 	public:
 		Position(void) { x = 0.0, y = 0.0; }
 		Position(double new_x, double new_y) { x = new_x; y = new_y; }
-		double x_toPixel(void) { return (int)(5.5 + x) * WinW / 11; }
-		double y_toPixel(void) { return (int)(4.1 - y) * WinH / 8.2; }
-		void RasterPos2f(void) { glRasterPos2f(x, y); }
+		double GetX(void) { return x; }
+		double GetY(void) { return y; }
 };
 
 class MenuItem
@@ -37,13 +36,12 @@ class MenuItem
 		{
 			return subMenu;
 		}
+		Position GetPos() { return pos; }
 		MenuItem* GetParent(void){ return parent; }
 		void PrintItem(void* font);
 		string& GetItemName() { return item; }
 		int GetId() { return id; }
 		void AddSubMenuItems(list<MenuItem> nlist) { subMenu = nlist; }
-		double ConvertPosX(void) { return pos.x_toPixel(); }
-		double ConvertPosY(void) { return pos.y_toPixel(); }
 };
 class Menu
 {
