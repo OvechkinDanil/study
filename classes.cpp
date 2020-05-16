@@ -4,9 +4,8 @@ void MenuItem::PrintItem(void* font)
 {
 	const char* c;
 	double x, y;
-	x = pos.GetX();
-	y = pos.GetY();
-	glRasterPos2f(x, y);
+	
+	pos.RasterPos2f();
 	for (auto c : item)
 	{
 		glutBitmapCharacter(font, *c);
