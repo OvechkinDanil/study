@@ -12,7 +12,7 @@ class Level
 	private:
 		Ball ball;
 		Racket racket;
-		Block** blocks;
+		vector< vector<Block> > blocks;
 		short lives;
 		list<Bonus> currentBonuses;
 	public:
