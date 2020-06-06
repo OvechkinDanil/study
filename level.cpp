@@ -37,20 +37,18 @@ block_t DetermineTypeBlock(int block, bonus_t& bonustype)
 	}
 	return blocktype;
 }
-Block** CreateBlocks(string FileName)
+vector < vector <Block> > CreateBlocks(string FileName)
 {
 	ifstream in(FileName);
 	int blocktypeInt;
 	int m = 0, n = 0;
-	Block** blocks;
 	block_t typeBlock;
 	bonus_t typeBonus;
 	in >> m;
 	in >> n;
 	row = m;
 	col = n;
-	blocks = new Block * [m];
-	for (int i = 0; i < n; i++) blocks[i] = new Block[n];
+	vector < vector <Block> > blocks(m, vector <Block>(n));
 
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
