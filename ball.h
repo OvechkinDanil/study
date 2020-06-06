@@ -35,14 +35,7 @@ public:
 	void ChangePos(int direction, float speed);
 	void ChangeActive(void)
 	{
-		if (active)
-		{
-			active = false;
-		}
-		else
-		{
-			active = true;
-		}
+		active = !active;
 	}
 	float GetX()
 	{
