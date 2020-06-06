@@ -24,12 +24,7 @@ class Level
 		Level(string FileName);
 		bool NoLives(void)
 		{
-			if (lives < 0)
-			{
-				return true;
-			}
-			else
-				return false;
+			return lives < 0;
 		}
 		void DrawBlocks(void);
 		void ChangeSystemPosition(int direction);
