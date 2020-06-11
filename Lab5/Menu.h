@@ -16,7 +16,7 @@ int formerX = -1;
 int formerY = -1;
 bool index = true;
 Pencil pencil(SMALLPEN, RED);
-Eraser eraser(SMALLERASER, BLACK);
+Eraser eraser(SMALLERASER);
 extern GLbyte* pixels;
 
 typedef enum
