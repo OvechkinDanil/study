@@ -29,5 +29,5 @@ public:
 	{
 		return active;
 	}
-	virtual void SetSize();
+	virtual void SetSize() const;
 };
