@@ -17,11 +17,11 @@ protected:
 		active = false;
 	}
 public:
-	virtual const void ChangeActive()
+	virtual void ChangeActive()
 	{
 		active = !active;
 	}
-	virtual const void ChangeSize(size_items_t n_size)
+	virtual void ChangeSize(size_items_t n_size)
 	{
 		size = n_size;
 	}
@@ -29,5 +29,5 @@ public:
 	{
 		return active;
 	}
-	virtual const void SetSize();
+	virtual void SetSize();
 };
