@@ -1,5 +1,9 @@
 #pragma once
-
+#include "Shapes.h"
+#include "Line.h"
+#include "Circle.h"
+#include "Rectangle.h"
+#include "Point.h"
 #include <iostream>
 #include <glut.h>
 #include <list>
@@ -17,6 +21,12 @@ int formerY = -1;
 bool index = true;
 Pencil pencil(SMALLPEN, RED);
 Eraser eraser(SMALLERASER);
+Figures* figure;
+Line line;
+Circle circle;
+Rectangle rectangle;
+Point point;
+Brush* brush;
 extern GLbyte* pixels;
 
 typedef enum
