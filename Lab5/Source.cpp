@@ -1,4 +1,5 @@
-#include "Shapes.h"
+#include "Menu.h"
+
 Menu menu;
 int init = 0;
 int deltaX = 60;
@@ -85,68 +86,9 @@ void mouse(int btn, int state, int x, int y) {
 		switch (btn) {
 
 		case GLUT_LEFT_BUTTON:
-			if (state == GLUT_DOWN) {
-				switch (cSwitch)
-				{
-
-				case POINT:
-					drawPoint(x, y);
-					break;
-				case ERASER:
-					if (pencil.isActive())
-					{
-						pencil.ChangeActive();
-					}
-					glColor3f(0.0f, 0.0f, 0.0f);
-					eraser.ChangeActive();
-					break;
-				case PENCIL:
-					if (eraser.isActive())
-					{
-						eraser.ChangeActive();
-					}
-					pencil.ChangeActive();
-					break;
-				case LINE:
-						if (index == true) 
-						{
-
-							formerX = x;
-							formerY = y;
-							index = false;
-						}
-						else 
-						{
-							drawLine(x, y, formerX, formerY);
-							index = true;
-						}
-						break;
-				case RECTANGLE:
-						if (index == true) 
-						{
-
-							formerX = x;
-							formerY = y;
-
-
-							index = false;
-						}
-						else 
-						{
-							drawRectangle(x, y, formerX, formerY);
-							index = true;
-						}
-						break;
-				case CIRCLE:
-						if (formerX == -1 && formerY == -1) 
-						{
-							formerX = x;
-							formerY = y;
-							break;
-						}
-						drawCircle(x, y);
-						break;
-				}
+			if (state == GLUT_DOWN) 
+			{
+				figure->Draw(x,y);
 			}
 
 			break;
@@ -154,10 +96,9 @@ void mouse(int btn, int state, int x, int y) {
 		}
 	}
 }
-
 void motion(int x, int y) 
 {
-	drawPoint(x, y);
+	point.Draw(x, y);
 }
 
 void timerRedisplay(int value) 
