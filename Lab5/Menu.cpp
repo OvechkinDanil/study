@@ -84,41 +84,41 @@ void menuFunc(int value)
 		break;
 
 	case POINT:
-		cSwitch = POINT;
+		figure = &point;
 		break;
 	case LINE:
-		cSwitch = LINE;
+		figure = &line;
 		break;
 
 	case RECTANGLE:
-		cSwitch = RECTANGLE;
+		figure = &rectangle;
 		break;
 	case CIRCLE:
-		cSwitch = CIRCLE;
+		figure = &circle;
 		break;
 	case SMALLPEN:
 		pencil.ChangeSize(SMALLPEN);
-		cSwitch = PENCIL;
+		brush = &pencil;
 		break;
 	case MEDIUMPEN:
 		pencil.ChangeSize(MEDIUMPEN);
-		cSwitch = PENCIL;
+		brush = &pencil;
 		break;
 	case LARGEPEN:
 		pencil.ChangeSize(LARGEPEN);
-		cSwitch = PENCIL;
+		brush = &pencil;
 		break;
 	case SMALLERASER:
 		eraser.ChangeSize(SMALLERASER);
-		cSwitch = ERASER;
+		brush = &eraser;
 		break;
 	case MEDIUMERASER:
 		eraser.ChangeSize(MEDIUMERASER);
-		cSwitch = ERASER;
+		brush = &eraser;
 		break;
 	case LARGEERASER:
 		eraser.ChangeSize(LARGEERASER);
-		cSwitch = ERASER;
+		brush = &eraser;
 		break;
 	case EXIT:
 		exit(0);
